@@ -4,20 +4,9 @@
     <h1> siemens tia test prj </h1>
     <p id="instruction"> {{instruction}} </p>
   <div class="Cards noselect" >
-
-    <div class="TheCard">
-      <div id="frontCard1" v-bind:class="{Front: !cardStyles[0]}">Front</div>
-      <div id="backCard1" v-bind:class="{Back: !cardStyles[0]}">{{cardStatus[0]}}</div>
-    </div>
-    <div class="TheCard">
-      <div @click="rotate(['frontCard2','backCard2'], 1)" id="frontCard2" class="Front">Front</div>
-      <div @click="rotate(['frontCard2','backCard2'], 0)" id="backCard2" class="Back">{{cardStatus[1]}}</div>
-    </div>
-    <div class="TheCard">
-      <div @click="rotate(['frontCard3','backCard3'], 1)" id="frontCard3" class="Front">Front</div>
-      <div @click="rotate(['frontCard3','backCard3'], 0)" id="backCard3" class="Back">{{cardStatus[2]}}</div>
-    </div>
-
+      <div id="Card1" v-on:click="rotateCard(0)" v-bind:class="{Front: !cardStyles[0], Back: cardStyles[0]}"> </div>
+      <div id="Card2" v-on:click="rotateCard(1)" v-bind:class="{Front: !cardStyles[1], Back: cardStyles[1]}"> </div>
+      <div id="Card3" v-on:click="rotateCard(2)" v-bind:class="{Front: !cardStyles[2], Back: cardStyles[2]}"> </div>
   </div>
   </div>
 
@@ -49,6 +38,22 @@
 
     methods:
     {
+      rotateCard: function(numOfCard)
+      {
+        switch(numOfCard)
+        {
+          case(0): this.cardStyles.splice(0, 1, !this.cardStyles[0]); break;
+          case(1): this.cardStyles.splice(1, 1, !this.cardStyles[1]); break;
+          case(2): this.cardStyles.splice(2, 1, !this.cardStyles[2]); break;
+        }
+      },
+
+      styleTransform: function(item){
+        //this.$refs.heading.style.color ='red'
+        item.target.style.backgroundColor = 'red'
+        console.log(item)
+      },
+
       onCardClick: function([idFront, idBack])
       {
         if(this.firstClick)
@@ -116,8 +121,6 @@
           document.getElementById(idFront).style.transform = "rotateY(0deg)";
           document.getElementById(idBack).style.transform = "rotateY(180deg)";
         }},
-
-
     },
 
     computed:
@@ -152,6 +155,11 @@ a {
   color: #42b983;
 }
 
+  .App{
+    width: 100%;
+    height: 600px;
+  }
+
   .Cards{
     position: absolute;
     right: 15%; left: 15%;
@@ -175,44 +183,37 @@ a {
     width: 25%;
     height: 90%;
     transform-style: preserve-3d;
-    backface-visibility: hidden;
     display: inline-block;
   }
 
   .Front{
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: relative;
+    width: 25%;
+    height: 90%;
+    margin: 2% 3.5%;
     transform-style: preserve-3d;
-    backface-visibility: hidden;
-    background: #a14d5d;
-    border-radius: 4% 4% 4% 4%;
+    display: inline-block;
+    background: black;
+    transition: all .8s ease;
+    box-shadow: 0 0.4em 5px rgba(122,122,122,0.5);
   }
   .Front:hover{
     animation: shadow 1s infinite alternate;
   }
 
   .Back{
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: relative;
+    width: 25%;
+    height: 90%;
+    margin: 2% 3.5%;
     transform-style: preserve-3d;
-    backface-visibility: hidden;
-    background: #76cc39;
-    border-radius: 4% 4% 4% 4%;
+    display: inline-block;
+    background: #c55c4b;
     transform: rotateY(180deg);
+    transition: all .8s ease;
   }
 
-  #frontCard1, #backCard1, #frontCard2, #backCard2 ,#frontCard3, #backCard3{
-    transition: all .8s ease;
-    box-shadow: 0.4em 0.4em 5px rgba(122,122,122,0.5);
-  }
-  #frontCard1, #backCard1{
-    box-shadow: -0.4em 0.4em 5px rgba(122,122,122,0.5);
-  }
-  #frontCard2, #backCard2{
-    box-shadow: 0 0.4em 5px rgba(122,122,122,0.5);
-  }
+
 
   @keyframes shadow {
     from {
