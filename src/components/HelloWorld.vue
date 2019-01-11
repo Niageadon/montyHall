@@ -1,13 +1,13 @@
 <template>
 
   <div class="App">
-    <h1> Monty Hall bibabox </h1>
+    <h1> siemens tia test prj </h1>
     <p id="instruction"> {{instruction}} </p>
   <div class="Cards noselect" >
 
     <div class="TheCard">
-      <div @click="rotate(['frontCard1','backCard1'], 1)" id="frontCard1" v-bind:class="{Front: !cardStyles[0]}">Front</div>
-      <div @click="rotate(['frontCard1','backCard1'], 0)" id="backCard1" v-bind:class="{Back: !cardStyles[0]}">{{cardStatus[0]}}</div>
+      <div id="frontCard1" v-bind:class="{Front: !cardStyles[0]}">Front</div>
+      <div id="backCard1" v-bind:class="{Back: !cardStyles[0]}">{{cardStatus[0]}}</div>
     </div>
     <div class="TheCard">
       <div @click="rotate(['frontCard2','backCard2'], 1)" id="frontCard2" class="Front">Front</div>
