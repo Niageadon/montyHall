@@ -2,12 +2,15 @@
 
   <div class="App">
     <h1> siemens tia test prj </h1>
-    <p id="instruction"> {{instruction}} </p>
-  <div class="Cards noselect" >
-      <div id="Card1" v-on:click="rotateCard(0)" v-bind:class="{Front: !cardStyles[0], Back: cardStyles[0]}"> </div>
-      <div id="Card2" v-on:click="rotateCard(1)" v-bind:class="{Front: !cardStyles[1], Back: cardStyles[1]}"> </div>
-      <div id="Card3" v-on:click="rotateCard(2)" v-bind:class="{Front: !cardStyles[2], Back: cardStyles[2]}"> </div>
-  </div>
+    <p> {{instruction}} </p>
+    <p> win:{{gameStat[0]}} lose:{{gameStat[1]}}</p>
+    <div class="Cards noselect" >
+      <div ref="Card1" id="Card1" v-on:click="onCardClick(0)" v-bind:class="{Front: !cardStyles[0], Back: cardStyles[0]}"> </div>
+      <div ref="Card2" id="Card2" v-on:click="onCardClick(1)" v-bind:class="{Front: !cardStyles[1], Back: cardStyles[1]}"> </div>
+      <div ref="Card3" id="Card3" v-on:click="onCardClick(2)" v-bind:class="{Front: !cardStyles[2], Back: cardStyles[2]}"> </div>
+    </div>
+
+    <div class="fakeImage"> </div>
   </div>
 
 </template>
@@ -21,19 +24,19 @@
     data: function()
     {
     return{
-      firstClick: true,
-      test: false,
+      firstClick: true, firstRandomCard: -1,
+      gameIsDone: false,
       numOfWinCard: 0,
-      numOfChosenCard: 0,
       cardStyles: [false, false, false],
       cardStatus: ['Fake', 'Fake', 'Fake'],
       instruction: 'Select the card',
-
+      gameStat: [0, 0]  // win, lose
       };
     },
 
     created(){
-      this.generateWinCard() // Первый
+      this.generateWinCard() // Generate first "win" card
+      this.$refs.Card1.style.color = 'red'
     },
 
     methods:
@@ -48,79 +51,90 @@
         }
       },
 
-      styleTransform: function(item){
-        //this.$refs.heading.style.color ='red'
-        item.target.style.backgroundColor = 'red'
-        console.log(item)
-      },
-
-      onCardClick: function([idFront, idBack])
+      onCardClick: function(numOfClickedCard)
       {
-        if(this.firstClick)
-        {
+        if(this.gameIsDone || this.firstRandomCard === numOfClickedCard) return;
+        else {
+            if (this.firstClick)
+            {
+                this.openFakeCard(numOfClickedCard);
+                this.firstClick = false;
+            }
+            else
+            {
+              this.gameIsDone = true;
+              let gameWin = (numOfClickedCard === this.numOfWinCard);
+              this.rotateCard(numOfClickedCard);
+              this.setGameStat(gameWin);
+            setTimeout(() => {
+              this.restart();
+            }, 1100);
+            }
 
-
-          this.instruction = "Now, chose one again"
-          this.firstClick = !this.firstClick
         }
       },
 
-      openFakeCard: function()
+      openFakeCard: function(numOfClickedCard)
       {
         let cardToOpen = 0;
-        if (this.numOfChosenCard === this.numOfWinCard)
+        if (numOfClickedCard === this.numOfWinCard)
         {
-          switch (this.numOfChosenCard)
+          switch (numOfClickedCard)
           {
-            case(1): cardToOpen = Math.random()>0.5? 2:3; break;
-            case(2): cardToOpen = Math.random()>0.5? 1:3; break;
-            case(3): cardToOpen = Math.random()>0.5? 1:2; break;
+            case(0): cardToOpen = Math.random()>0.5? 1 : 2; break;
+            case(1): cardToOpen = Math.random()>0.5? 0 : 2; break;
+            case(2): cardToOpen = Math.random()>0.5? 0 : 1; break;
           }
         }
-
-        switch (this.numOfWinCard)
-        {
-          case(1): cardToOpen = this.numOfChosenCard === 2? 3:2; break;
-          case(2): cardToOpen = this.numOfChosenCard === 1? 3:1; break;
-          case(3): cardToOpen = this.numOfChosenCard === 1? 2:1; break;
+        else {
+            switch (this.numOfWinCard)
+            {
+                case(0): cardToOpen = numOfClickedCard === 1? 2 : 1; break;
+                case(1): cardToOpen = numOfClickedCard === 0? 2 : 0; break;
+                case(2): cardToOpen = numOfClickedCard === 1? 0 : 1; break;
+            }
         }
-
-        return cardToOpen;
+        this.firstRandomCard = cardToOpen
+        this.rotateCard(cardToOpen);
       },
 
       randomCard: function()
       {
-        return Math.ceil(Math.random() * 3)
+        return Math.ceil(Math.random() * 3 - 1)
       },
 
       generateWinCard()
       {
         this.numOfWinCard = this.randomCard()
-        switch (this.numOfWinCard) {
-          case (1):
-            this.cardStatus[0] = "Win";
-            break;
-          case (2):
-            this.cardStatus[1] = "Win";
-            break;
-          case (3):
-            this.cardStatus[2] = "Win";
-            break;
+        switch (this.numOfWinCard)
+        {
+          case (0): this.cardStatus[0] = "Win"; break;
+          case (1): this.cardStatus[1] = "Win"; break;
+          case (2): this.cardStatus[2] = "Win"; break;
         }
       },
 
-      rotate: function([idFront, idBack], front)
-      { // rotate card's on click
-        if (front)
-        {
-          document.getElementById(idFront).style.transform = "rotateY(180deg)";
-          document.getElementById(idBack).style.transform = "rotateY(0deg)";
-        }
-        else
-        {
-          document.getElementById(idFront).style.transform = "rotateY(0deg)";
-          document.getElementById(idBack).style.transform = "rotateY(180deg)";
-        }},
+      restart: function () {
+          this.cardStyles.splice(0, 1, false);
+          this.cardStyles.splice(1, 1, false);
+          this.cardStyles.splice(2, 1, false);
+          this.cardStatus.splice(0, 3, "fake");
+          this.cardStatus.splice(1, 1, "fake");
+          this.cardStatus.splice(2, 1, "fake");
+          //this.cardStatus[0] = "fake";
+          //this.cardStatus[1] = "fake";
+          //this.cardStatus[2] = "fake";
+          this.generateWinCard();
+          this.firstRandomCard = -1;
+          this.gameIsDone = false;
+          this.firstClick = true;
+      },
+
+      setGameStat:function (gameResult)
+      {
+        gameResult === true?  this.gameStat[0]++: this.gameStat[1]++
+      }
+
     },
 
     computed:
@@ -135,7 +149,9 @@
     {
       firstClick: function()
       {
-        return this.test = !this.firstClick
+          if(this.firstClick === true)
+          {return this.instruction = 'Chose again'}
+          else return this.instruction = 'Select the card'
       }
     }
   }
@@ -195,7 +211,6 @@ a {
     display: inline-block;
     background: black;
     transition: all .8s ease;
-    box-shadow: 0 0.4em 5px rgba(122,122,122,0.5);
   }
   .Front:hover{
     animation: shadow 1s infinite alternate;
@@ -213,7 +228,26 @@ a {
     transition: all .8s ease;
   }
 
+  .winImage{
+      margin-top: 200px ;
+      display: block;
+    background-image: url('https://i.ytimg.com/vi/b7YnpWa678s/maxresdefault.jpg');
+      width: 200px;
+      height: 200px;
+  }
 
+  .fakeImage{
+    background-color: blueviolet;
+    background-image: url("../assets/w.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    background-size: contain;
+
+    width: 150px;
+    height: 150px;
+    margin-top: 170px;
+  }
 
   @keyframes shadow {
     from {

@@ -10,19 +10,16 @@
       </ul>
     </header>
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <test />
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import test from './components/test.vue'
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
-    test
   }
 }
 </script>
