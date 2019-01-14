@@ -45,6 +45,7 @@
     created(){
       this.generateWinCard(); // Generate first "win" card
       //this.getImgforCard(); // Generate rand img's for card's
+      this.getImgforCard();
     },
 
     methods:
@@ -148,6 +149,7 @@
           this.gameIsDone = false;
           this.firstClick = true;
           //this.instruction = 'Select the card'
+          this.getImgforCard();
       },
 
       setGameStat:function (gameResult)
@@ -158,14 +160,26 @@
       getImgforCard: function () {
          let firstLoseImgIsUsed = false;
          let secondLoseImgIsUsed = false;
+         this.imgStatus = ['', '', ''];
           for(let i=0; i<3; i++)
           {
-            if(this.cardStatus[i] === 'Win') this.imgStatus= 'Win';
+            if(this.cardStatus[i] === 'Win') this.imgStatus[i]= 'Win';
             else
             {
-                if(firstLoseImgIsUsed) this.imgStatus= 'Lose2';
-                if(secondLoseImgIsUsed) this.imgStatus= 'Lose1';
-                Math.random() > 0.5? this.imgStatus = 'Lose1': this.imgStatus = 'Lose1';
+                if(firstLoseImgIsUsed) this.imgStatus[i] = 'Lose2'
+                else
+                {
+                if(secondLoseImgIsUsed) this.imgStatus[i] = 'Lose1';
+                else
+                {
+                  Math.random() > 0.5 ? this.imgStatus[i] = 'Lose1' : this.imgStatus[i] = 'Lose1';
+                }
+                }
+                this.imgStatus[i]==='Lose1'? firstLoseImgIsUsed = true: secondLoseImgIsUsed = true;
+                if (firstLoseImgIsUsed)
+                {
+                  true
+                }
             }
           }
 
@@ -272,7 +286,7 @@ a {
       height: 100%;
   }
 
-    .fakeImage1{
+  .fakeImage1{
         background-image: url("../assets/w.svg");
         background-repeat: no-repeat;
         background-position: center center;
@@ -281,7 +295,7 @@ a {
         height: 100%;
     }
 
-    .fakeImage2{
+  .fakeImage2{
         background-image: url("../assets/f1.svg");
         background-repeat: no-repeat;
         background-position: center center;
@@ -289,6 +303,11 @@ a {
         width: 100%;
         height: 100%;
     }
+
+.winImage, .fakeImage1, .fakeImage2{
+  width: 50%;
+  height: 50%;
+}
 
 
   @keyframes shadow {
