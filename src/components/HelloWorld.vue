@@ -1,8 +1,8 @@
 <template>
 
   <div class="App">
-    <h1> "The Monty Hall Dilemma" </h1>
-    <p> {{instruction}} </p>
+    <a href="https://en.wikipedia.org/wiki/Monty_Hall_problem">  <h1 > "The Monty Hall Dilemma" </h1>  </a>
+    <p>  {{instruction}} </p>
 
     <div class="Cards noSelect" >
         <div class="TheCard" v-on:click="onCardClick(0)">
