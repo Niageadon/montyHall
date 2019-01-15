@@ -1,14 +1,5 @@
 <template>
   <div id="app">
-    <header>
-      <ul>
-        <li>Home</li>
-
-        <li>1</li>
-
-        <li> 1</li>
-      </ul>
-    </header>
     <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
@@ -31,15 +22,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 1vw;
+  margin: 0 0;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+body{
+  margin: 0 0;
+  background-color: #3c4371;
+
 }
 </style>

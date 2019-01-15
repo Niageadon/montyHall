@@ -1,9 +1,9 @@
 <template>
 
   <div class="App">
-    <h1> siemens tia test prj </h1>
+    <h1> "The Monty Hall Dilemma" </h1>
     <p> {{instruction}} </p>
-    <p> win:{{gameStat[0]}} lose:{{gameStat[1]}}</p>
+
     <div class="Cards noSelect" >
         <div class="TheCard" v-on:click="onCardClick(0)">
             <div class="nFront" v-if="!cardStyles[0]"></div>
@@ -20,6 +20,7 @@
             <div class="nBack" v-else v-bind:class="{winImage: imgStatus[2]==='Win',fakeImage1: imgStatus[2]==='Lose1', fakeImage2: imgStatus[2]==='Lose2'}" >  </div>
         </div>
     </div>
+      <p> win:{{gameStat[0]}} lose:{{gameStat[1]}}</p>
   </div>
 
 </template>
@@ -208,28 +209,36 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-ul {
-  list-style-type: none;
-  padding: 0;
+    /* colours: https://colorscheme.ru/#3T405hWhWzcuD */
+h1{
+    padding-top: 1vw;
+    font-size: 3vw;
+    margin: 0 0;
+    color: rgb(245, 227, 170);
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+p{
+    font-size: 2.5vw;
+    color: rgb(245, 227, 170);
+    margin: 0 0;
+    padding-top: 0.8vw;
 }
 
   .App{
     width: 100%;
-    height: 600px;
+      height: 45vw;
+      display: flex;
+      /*justify-content: space-evenly;*/  /* равномерное распределение дочерних элементов */
+      flex-direction: column;
   }
 
   .Cards{
-    position: absolute;
+      margin: 2vw 0;
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;  /* равномерное распределение дочерних элементов */
+    align-items: center;            /* центрирование по высоте */
     right: 15%; left: 15%;
-    width: 70%; height: 30vw;
-    background: aqua;
+    width: 70%; height: 55%;
   }
 
   .noSelect {
@@ -243,42 +252,44 @@ a {
   }
 
   .TheCard{
-    position: relative;
-    margin: 2% 3.5%;
+    /*position: relative;*/
+      display: flex;
+      justify-content: space-evenly;  /* равномерное распределение дочерних элементов */
+      align-items: center;
     width: 25%;
-    height: 90%;
+    height: 100%;
     transform-style: preserve-3d;
-    display: inline-block;
     transition: all .8s ease;
-
   }
 
 .nFront{
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 85%;
+    height: 85%;
     transform-style: preserve-3d;
-    background: black;
+    background: #C4AC71;
     transition: all .8s ease;
     border-radius: 4% 4% 4% 4%;
 }
 .nFront:hover{
-    animation: shadow 1s infinite alternate;
+    /*animation: shadow 1s infinite alternate;*/
+    background: #C4B286;
+    width: 90%;
+    height: 90%;
 }
 
 .nBack{
     position: relative;
-    width: 100%;
-    height: 100%;
     transform-style: preserve-3d;
-    background: red;
+    background: #BC8094;
     transform: rotateY(180deg);
     transition: all .8s ease;
     border-radius: 4% 4% 4% 4%;
-}
+  }
 
   .winImage{
       background-image: url("../assets/w.svg");
+      background-color: #94BD6C;
       background-repeat: no-repeat;
       background-position: center center;
       background-size: contain;
@@ -287,28 +298,22 @@ a {
   }
 
   .fakeImage1{
-        background-image: url("../assets/w.svg");
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-        width: 100%;
-        height: 100%;
-    }
-
-  .fakeImage2{
         background-image: url("../assets/f1.svg");
         background-repeat: no-repeat;
         background-position: center center;
         background-size: contain;
-        width: 100%;
-        height: 100%;
+        width: 95%;
+        height: 95%;
     }
 
-.winImage, .fakeImage1, .fakeImage2{
-  width: 50%;
-  height: 50%;
-}
-
+  .fakeImage2{
+        background-image: url("../assets/f2.svg");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        width: 95%;
+        height: 95%;
+    }
 
   @keyframes shadow {
     from {
