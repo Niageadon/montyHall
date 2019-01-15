@@ -259,7 +259,7 @@ p{
     width: 25%;
     height: 100%;
     transform-style: preserve-3d;
-    transition: all .8s ease;
+
   }
 
 .nFront{
@@ -268,8 +268,8 @@ p{
     height: 85%;
     transform-style: preserve-3d;
     background: #C4AC71;
-    transition: all .8s ease;
     border-radius: 4% 4% 4% 4%;
+    transition: all .8s ease;
 }
 .nFront:hover{
     /*animation: shadow 1s infinite alternate;*/
@@ -283,8 +283,8 @@ p{
     transform-style: preserve-3d;
     background: #BC8094;
     transform: rotateY(180deg);
-    transition: all .8s ease;
     border-radius: 4% 4% 4% 4%;
+    transition: all .8s ease;
   }
 
   .winImage{
