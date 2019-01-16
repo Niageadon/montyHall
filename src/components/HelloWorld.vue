@@ -20,7 +20,7 @@
             <div class="nBack" v-else v-bind:class="{winImage: imgStatus[2]==='Win',fakeImage1: imgStatus[2]==='Lose1', fakeImage2: imgStatus[2]==='Lose2'}" >  </div>
         </div>
     </div>
-      <p> win:{{gameStat[0]}} lose:{{gameStat[1]}}</p>
+      <p> Win:{{gameStat[0]}}   &nbsp&nbsp&nbsp   Lose:{{gameStat[1]}}</p>
   </div>
 
 </template>
@@ -211,16 +211,21 @@
 <style scoped>
     /* colours: https://colorscheme.ru/#3T405hWhWzcuD */
 h1{
-    padding-top: 1vw;
+    padding-top: 2.5vw;
     font-size: 3vw;
     margin: 0 0;
     color: rgb(245, 227, 170);
+    font-family: Impact;
 }
 p{
     font-size: 2.5vw;
     color: rgb(245, 227, 170);
     margin: 0 0;
-    padding-top: 0.8vw;
+    padding-top: 2vw;
+    font-family: fantasy;
+}
+A{
+    color: #8F783F;
 }
 
   .App{
