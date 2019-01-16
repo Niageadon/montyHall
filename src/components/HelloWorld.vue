@@ -20,7 +20,7 @@
             <div class="nBack" v-else v-bind:class="{winImage: imgStatus[2]==='Win',fakeImage1: imgStatus[2]==='Lose1', fakeImage2: imgStatus[2]==='Lose2'}" >  </div>
         </div>
     </div>
-      <p> Win:{{gameStat[0]}}   &nbsp&nbsp&nbsp   Lose:{{gameStat[1]}}</p>
+      <p> Win:{{gameStat[0]}}   &nbsp &nbsp &nbsp   Lose:{{gameStat[1]}}</p>
   </div>
 
 </template>
@@ -306,7 +306,7 @@ A{
         background-image: url("../assets/f1.svg");
         background-repeat: no-repeat;
         background-position: center center;
-        background-size: contain;
+        background-size: 60%;
         width: 95%;
         height: 95%;
     }
@@ -315,7 +315,7 @@ A{
         background-image: url("../assets/f2.svg");
         background-repeat: no-repeat;
         background-position: center center;
-        background-size: contain;
+        background-size: 60%;
         width: 95%;
         height: 95%;
     }
