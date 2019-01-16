@@ -201,7 +201,7 @@
       {
           if(this.firstClick === true)
           {return this.instruction = 'Select the card'}
-          else return this.instruction = 'Chose again'
+          else return this.instruction = 'Сhoose again'
       }
     }
   }
