@@ -1,5 +1,4 @@
 <template>
-
   <div class="App">
     <a href="https://en.wikipedia.org/wiki/Monty_Hall_problem">  <h1 > "The Monty Hall Dilemma" </h1>  </a>
     <p>  {{instruction}} </p>
@@ -208,24 +207,31 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
     /* colours: https://colorscheme.ru/#3T405hWhWzcuD */
+
+    // colours:
+    $goldDark: #8F783F;
+    $goldWhite: #F5E3AA;
+    $win-color: #94BD6C;
+    $lose-color: #BC8094;
+
 h1{
     padding-top: 2.5vw;
     font-size: 3vw;
     margin: 0 0;
-    color: rgb(245, 227, 170);
+    color: $goldWhite;
     font-family: Impact;
 }
 p{
     font-size: 2.5vw;
-    color: rgb(245, 227, 170);
+    color: $goldWhite;
     margin: 0 0;
     padding-top: 2vw;
     font-family: fantasy;
 }
 A{
-    color: #8F783F;
+    color: $goldDark;
 }
 
   .App{
@@ -286,7 +292,7 @@ A{
 .nBack{
     position: relative;
     transform-style: preserve-3d;
-    background: #BC8094;
+    background: $lose-color;
     transform: rotateY(180deg);
     border-radius: 4% 4% 4% 4%;
     transition: all .8s ease;
@@ -294,7 +300,7 @@ A{
 
   .winImage{
       background-image: url("../assets/w.svg");
-      background-color: #94BD6C;
+      background-color: $win-color;
       background-repeat: no-repeat;
       background-position: center center;
       background-size: contain;
