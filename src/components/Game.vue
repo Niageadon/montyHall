@@ -5,17 +5,17 @@
 
     <div class="Cards noSelect" >
         <div class="TheCard" v-on:click="onCardClick(0)">
-            <div class="nFront" v-if="!cardStyles[0]"></div>
+            <div class="nFront" v-if="!cardOpened[0]"></div>
             <div class="nBack" v-else v-bind:class="{winImage: imgStatus[0]==='Win',fakeImage1: imgStatus[0]==='Lose1', fakeImage2: imgStatus[0]==='Lose2'}" >  </div>
         </div>
 
         <div class="TheCard" v-on:click="onCardClick(1)">
-            <div class="nFront" v-if="!cardStyles[1]"></div>
+            <div class="nFront" v-if="!cardOpened[1]"></div>
             <div class="nBack" v-else v-bind:class="{winImage: imgStatus[1]==='Win',fakeImage1: imgStatus[1]==='Lose1', fakeImage2: imgStatus[1]==='Lose2'}" >  </div>
         </div>
 
         <div class="TheCard" v-on:click="onCardClick(2)">
-            <div class="nFront" v-if="!cardStyles[2]"></div>
+            <div class="nFront" v-if="!cardOpened[2]"></div>
             <div class="nBack" v-else v-bind:class="{winImage: imgStatus[2]==='Win',fakeImage1: imgStatus[2]==='Lose1', fakeImage2: imgStatus[2]==='Lose2'}" >  </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
 
 <script>
   export default {
-    name: 'HelloWorld',
+    name: 'Game',
     props: {
       msg: String
     },
@@ -35,7 +35,7 @@
     return{
       firstClick: true, firstRandomCard: -1, numOfWinCard: -1,
       gameIsDone: false,
-      cardStyles: [false, false, false],
+      cardOpened: [false, false, false],
       cardStatus: ['Fake', 'Fake', 'Fake'], imgStatus: ['', '', ''],
       instruction: 'Select the card',
       gameStat: [0, 0]  // num of win's, lose's
@@ -54,9 +54,9 @@
       {
         switch(numOfCard)
         {
-          case(0): this.cardStyles.splice(0, 1, !this.cardStyles[0]); break;
-          case(1): this.cardStyles.splice(1, 1, !this.cardStyles[1]); break;
-          case(2): this.cardStyles.splice(2, 1, !this.cardStyles[2]); break;
+          case(0): this.cardOpened.splice(0, 1, !this.cardOpened[0]); break;
+          case(1): this.cardOpened.splice(1, 1, !this.cardOpened[1]); break;
+          case(2): this.cardOpened.splice(2, 1, !this.cardOpened[2]); break;
         }
       },
 
@@ -129,15 +129,15 @@
 
       openLastCard: function()
       {
-          if(this.cardStyles[0] === false) this.cardStyles.splice(0, 1, true);
-          if(this.cardStyles[1] === false) this.cardStyles.splice(1, 1, true);
-          if(this.cardStyles[2] === false) this.cardStyles.splice(2, 1, true);
+          if(this.cardOpened[0] === false) this.cardOpened.splice(0, 1, true);
+          if(this.cardOpened[1] === false) this.cardOpened.splice(1, 1, true);
+          if(this.cardOpened[2] === false) this.cardOpened.splice(2, 1, true);
       },
 
       restart: function () {
-          this.cardStyles.splice(0, 1, false);
-          this.cardStyles.splice(1, 1, false);
-          this.cardStyles.splice(2, 1, false);
+          this.cardOpened.splice(0, 1, false);
+          this.cardOpened.splice(1, 1, false);
+          this.cardOpened.splice(2, 1, false);
           this.cardStatus.splice(0, 3, "fake");
           this.cardStatus.splice(1, 1, "fake");
           this.cardStatus.splice(2, 1, "fake");
@@ -215,6 +215,8 @@
     $goldWhite: #F5E3AA;
     $win-color: #94BD6C;
     $lose-color: #BC8094;
+    $card-color: #C4AC71;
+    $card-focused-color: #C4B286;
 
 h1{
     padding-top: 2.5vw;
@@ -243,7 +245,7 @@ A{
   }
 
   .Cards{
-      margin: 2vw 0;
+    margin: 2vw 0;
     position: relative;
     display: flex;
     justify-content: space-evenly;  /* равномерное распределение дочерних элементов */
@@ -267,26 +269,23 @@ A{
       display: flex;
       justify-content: space-evenly;  /* равномерное распределение дочерних элементов */
       align-items: center;
-    width: 25%;
-    height: 100%;
-    transform-style: preserve-3d;
-
+      width: 25%;
+      height: 100%;
+      transform-style: preserve-3d;
   }
 
 .nFront{
     position: relative;
     width: 85%;
     height: 85%;
-    transform-style: preserve-3d;
-    background: #C4AC71;
+    background: $card-color;
     border-radius: 4% 4% 4% 4%;
     transition: all .8s ease;
-}
-.nFront:hover{
-    /*animation: shadow 1s infinite alternate;*/
-    background: #C4B286;
-    width: 90%;
-    height: 90%;
+    &:hover{
+      background: $card-focused-color;
+      width: 90%;
+      height: 90%;
+    }
 }
 
 .nBack{
@@ -296,6 +295,17 @@ A{
     transform: rotateY(180deg);
     border-radius: 4% 4% 4% 4%;
     transition: all .8s ease;
+  visibility: hidden;
+
+  .first{
+
+    }
+    .second{
+
+    }
+    .third{
+
+    }
   }
 
   .winImage{
